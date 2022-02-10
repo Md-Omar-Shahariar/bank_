@@ -16,9 +16,31 @@ document.getElementById('deposit-button').addEventListener('click', function(){
     const newBalance = balanceTotal + parseFloat(depositAmount)
     document.getElementById('balance-total').innerText = newBalance
 
-    //Withdraw
+
     
 
+
+
+})
+
+// withdraw
+
+document.getElementById('withdraw-button').addEventListener('click', function(){
+    const withdrawAmount = parseFloat(document.getElementById('withdraw-input').value)
+
+    const withdrawCurrent = parseFloat(document.getElementById('withdraw-total').innerText)
+
+    console.log(withdrawCurrent);
+    
+    document.getElementById('withdraw-total').innerText = withdrawAmount + withdrawCurrent
+
+    //clear
+    document.getElementById('withdraw-input').value = ''
+    // balance update
+
+    const balanceTotal =parseFloat(document.getElementById('balance-total').innerText)
+    const newBalance = balanceTotal - withdrawAmount
+    document.getElementById('balance-total').innerText = newBalance
 
 
 })
