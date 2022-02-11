@@ -2,9 +2,13 @@ function getInputValue(inputId){
     const input = document.getElementById(inputId)
     const amountText = input.value
     const amount = parseFloat(amountText)
-// clear value
-    input.value = ''
+    input.value = '' //clear value
     return amount
+}
+
+function getCurrentBalance(){
+    const balanceTotal =parseFloat(document.getElementById('balance-total').innerText)
+    return balanceTotal
 }
 function total(totalFieldId, amount){
     const current = document.getElementById(totalFieldId)
@@ -13,7 +17,7 @@ function total(totalFieldId, amount){
     current.innerText = amount + previousTotal
 }
 function updateBalance(amount, isAdd){
-    const balanceTotal =parseFloat(document.getElementById('balance-total').innerText)
+    const balanceTotal = getCurrentBalance()
     if(isAdd == true){
         const newBalance = balanceTotal + amount
         document.getElementById('balance-total').innerText = newBalance
@@ -27,9 +31,11 @@ function updateBalance(amount, isAdd){
 
 document.getElementById('deposit-button').addEventListener('click', function(){
     const depositAmount = getInputValue('deposit-input')
-    // balance update
-    total('deposit-total' ,depositAmount)
-    updateBalance(depositAmount, true)
+    if(depositAmount > 0){
+        total('deposit-total' ,depositAmount)
+        updateBalance(depositAmount, true)
+    }
+    
     
 
 })
@@ -39,9 +45,17 @@ document.getElementById('deposit-button').addEventListener('click', function(){
 document.getElementById('withdraw-button').addEventListener('click', function(){
     
     const withdrawAmount = getInputValue('withdraw-input')
-    total('withdraw-total',withdrawAmount)
-    // balance update
-    updateBalance(withdrawAmount, false)
+    const currentBalance = getCurrentBalance()
+    if(withdrawAmount > 0){
+        if( currentBalance >= withdrawAmount){
+            total('withdraw-total',withdrawAmount)
+            updateBalance(withdrawAmount, false)
+        }
+        else{
+            alert('Insufficient balance')
+        }
+    }
+    
 
 
 })
